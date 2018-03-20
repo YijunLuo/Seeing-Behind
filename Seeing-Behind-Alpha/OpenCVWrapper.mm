@@ -198,68 +198,68 @@ void CalcCorners(const Mat& H, const Mat& src)
     Mat image01,image02,output;
     UIImageToMat(pimage1, image01);
     UIImageToMat(pimage2, image02);
-    
-    
-    //灰度图转换
-    Mat image1, image2;
-    cvtColor(image01, image1, CV_RGB2GRAY);
-    cvtColor(image02, image2, CV_RGB2GRAY);
-    
-    //提取特征点
-    Ptr<FeatureDetector> detector = ORB::create(3000);
-    vector<KeyPoint> keyPoint1, keyPoint2;
-    detector->detect(image1, keyPoint1);
-    detector->detect(image2, keyPoint2);
-    
-    //特征点描述，为下边的特征点匹配做准备
-    DescriptorExtractor   Descriptor;
-    Ptr<DescriptorExtractor> descriptorExtractor = ORB::create();
-    Mat imageDesc1, imageDesc2;
-    
-    descriptorExtractor->compute(image1, keyPoint1, imageDesc1);
-    descriptorExtractor->compute(image2, keyPoint2, imageDesc2);
-    
-    
-    Ptr<DescriptorMatcher> matcher = makePtr<FlannBasedMatcher>(makePtr<flann::LshIndexParams>(12, 20, 2));
-    vector<vector<DMatch> > matchePoints;
-    vector<DMatch> GoodMatchePoints;
-    
-    MatchesSet matches;
-    
-    vector<Mat> train_desc(1, imageDesc1);
-    matcher->add(train_desc);
-    matcher->train();
-    
-    matcher->knnMatch(imageDesc2, matchePoints, 2);
-    
-    // Lowe's algorithm,获取优秀匹配点
-    for (int i = 0; i < matchePoints.size(); i++)
-    {
-        if (matchePoints[i].size() >=2 && matchePoints[i][0].distance < 0.8 * matchePoints[i][1].distance)
-        {
-            GoodMatchePoints.push_back(matchePoints[i][0]);
-            matches.insert(make_pair(matchePoints[i][0].queryIdx, matchePoints[i][0].trainIdx));
-        }
-    }
-    //cout<<"\n1->2 matches: " << GoodMatchePoints.size() << endl;
-    
-    //画 匹配特征点的 连线
-    Mat first_match;
-    drawMatches(image02, keyPoint2, image01, keyPoint1, GoodMatchePoints, first_match);
-    
-    //将两张图像转换为同一坐标下 变换矩阵
-    vector<Point2f> imagePoints1, imagePoints2;
-    
-    for (int i = 0; i<GoodMatchePoints.size(); i++)
-    {
-        imagePoints2.push_back(keyPoint2[GoodMatchePoints[i].queryIdx].pt);
-        imagePoints1.push_back(keyPoint1[GoodMatchePoints[i].trainIdx].pt);
-    }
-    
-    
-    //获取图像1到图像2的投影映射矩阵 尺寸为3*3
-    
     if(flag == 0){
+    
+        //灰度图转换
+        Mat image1, image2;
+        cvtColor(image01, image1, CV_RGB2GRAY);
+        cvtColor(image02, image2, CV_RGB2GRAY);
+        
+        //提取特征点
+        Ptr<FeatureDetector> detector = ORB::create(3000);
+        vector<KeyPoint> keyPoint1, keyPoint2;
+        detector->detect(image1, keyPoint1);
+        detector->detect(image2, keyPoint2);
+        
+        //特征点描述，为下边的特征点匹配做准备
+        DescriptorExtractor   Descriptor;
+        Ptr<DescriptorExtractor> descriptorExtractor = ORB::create();
+        Mat imageDesc1, imageDesc2;
+        
+        descriptorExtractor->compute(image1, keyPoint1, imageDesc1);
+        descriptorExtractor->compute(image2, keyPoint2, imageDesc2);
+        
+        
+        Ptr<DescriptorMatcher> matcher = makePtr<FlannBasedMatcher>(makePtr<flann::LshIndexParams>(12, 20, 2));
+        vector<vector<DMatch> > matchePoints;
+        vector<DMatch> GoodMatchePoints;
+        
+        MatchesSet matches;
+        
+        vector<Mat> train_desc(1, imageDesc1);
+        matcher->add(train_desc);
+        matcher->train();
+        
+        matcher->knnMatch(imageDesc2, matchePoints, 2);
+        
+        // Lowe's algorithm,获取优秀匹配点
+        for (int i = 0; i < matchePoints.size(); i++)
+        {
+            if (matchePoints[i].size() >=2 && matchePoints[i][0].distance < 0.8 * matchePoints[i][1].distance)
+            {
+                GoodMatchePoints.push_back(matchePoints[i][0]);
+                matches.insert(make_pair(matchePoints[i][0].queryIdx, matchePoints[i][0].trainIdx));
+            }
+        }
+        //cout<<"\n1->2 matches: " << GoodMatchePoints.size() << endl;
+        
+        //画 匹配特征点的 连线
+        //Mat first_match;
+        //drawMatches(image02, keyPoint2, image01, keyPoint1, GoodMatchePoints, first_match);
+        
+        //将两张图像转换为同一坐标下 变换矩阵
+        vector<Point2f> imagePoints1, imagePoints2;
+        
+        for (int i = 0; i<GoodMatchePoints.size(); i++)
+        {
+            imagePoints2.push_back(keyPoint2[GoodMatchePoints[i].queryIdx].pt);
+            imagePoints1.push_back(keyPoint1[GoodMatchePoints[i].trainIdx].pt);
+        }
+        
+        
+        //获取图像1到图像2的投影映射矩阵 尺寸为3*3
+    
+    
         homo = findHomography(imagePoints1, imagePoints2, CV_RANSAC);
         flag = 1;
     }

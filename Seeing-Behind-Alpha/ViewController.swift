@@ -16,12 +16,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    @IBOutlet weak var playButton: UIButton!
-    
     @IBOutlet weak var imageView: UIImageView!
-
-    @IBOutlet weak var testView: UIImageView!
-    
     
     var url: URL?
     
@@ -31,6 +26,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         //let testimg = UIImage(named: ("lena.png"))
         //self.testView.image = testimg
+        
+        /*
+        let tap = UITapGestureRecognizer(target: self, action: #selector(playAndStop(tapGestureRecognizer:)))
+        self.view.isUserInteractionEnabled = true
+        self.view.addGestureRecognizer(tap)
+ */
         
         //test opencv
         print("\(OpenCVWrapper.openCVVersionString())")
@@ -54,7 +55,7 @@ class ViewController: UIViewController {
         url = URL(string: "http://"+host_url+":8081")
         streamingController1.contentURL = url
         
-        playButton.setTitle("Stop", for: .normal)
+        //playButton.setTitle("Stop", for: .normal)
         streamingController1.play()
         playing = true
     }
@@ -64,9 +65,9 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func playAndStop(sender: AnyObject) {
+    @IBAction func play(_ sender: UITapGestureRecognizer) {
         if playing {
-            playButton.setTitle("Play", for: .normal)
+            //playButton.setTitle("Play", for: .normal)
             streamingController1.stop()
             playing = false
         } else {
@@ -74,15 +75,33 @@ class ViewController: UIViewController {
             streamingController1.play()
             playing = true
             
-            testView.image = streamingController1.currentFrame
+            //testView.image = streamingController1.currentFrame
             
-            playButton.setTitle("Stop", for: .normal)
+            //playButton.setTitle("Stop", for: .normal)
         }
     }
+    /*
+    @objc func playAndStop(tapGestureRecognizer: UITapGestureRecognizer) {
+        if playing {
+            //playButton.setTitle("Play", for: .normal)
+            streamingController1.stop()
+            playing = false
+        } else {
+            
+            streamingController1.play()
+            playing = true
+            
+            //testView.image = streamingController1.currentFrame
+            
+            //playButton.setTitle("Stop", for: .normal)
+        }
+    }*/
     
+    /*
     @IBAction func swipeLeft(_ sender: UISwipeGestureRecognizer) {
         performSegue(withIdentifier: "segue", sender: self)
     }
+ */
     
     
 }

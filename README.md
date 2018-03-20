@@ -21,10 +21,20 @@ __NOTE__
   - For first-time build, you might need to go to _Settings > General > Device Management_ to trust the certificate.
   - By default, the Raspberry Pi will connect to _MWireless_.
 
-## App Features
+### App Features
   - When opening the app, cameras are automatically turned on. When the app is closed or goes to the background, cameras are turned off without any additional operations, and are turned back on whenever resumed.
   - When the app is closed or sleeps in the background, commands to clear backup files automatically saved on Raspberry Pi are sent to Pi in order to keep it working properly.
   - In the user interface, there are enabled buttons to play and stop the video streaming display, go to a different camera view, and to go back to the main menu.
   - Users can also swipe left and right to see different views and return to the main menu.
 
-
+## Beta Release
+### How to build and run the project
+ - Download the code package
+ - Download [opencv framework](https://opencv.org/releases.html) and put it in the project folder
+ - Add the framework
+ - Connect iPhone and build the project
+ 
+ ### App Features
+  - There are three pages corresponding to stitched view, camera view 1 and camera view2.
+  - Users swipe left and right to switch between different views
+  - Users tap on the camera views to stop and play them

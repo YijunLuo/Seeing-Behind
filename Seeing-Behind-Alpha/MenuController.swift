@@ -30,6 +30,13 @@ class MenuController: UIViewController {
         // Do any additional setup after loading the view.
         streamingController1 = MjpegStreamingController(imageView: view1)
         streamingController2 = MjpegStreamingController(imageView: view2)
+        
+        //SwipeAction
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(MenutoView1(swipe:)))
+        leftSwipe.direction = UISwipeGestureRecognizerDirection.left
+        self.view.addGestureRecognizer(leftSwipe)
+        
+        
         let url1 = URL(string: "http://"+host_url+":8081")
         streamingController1.contentURL = url1
         let url2 = URL(string: "http://"+host_url+":8082")
@@ -80,12 +87,17 @@ class MenuController: UIViewController {
     }
     
     @objc func displayStitch() {
-        usleep(1000000)
+        usleep(100000)
         var images:[UIImage] = []
         
         /*if (myViewController1.streamingController == nil){
          print("update frame")
          }*/
+        
+        if (streamingController1.currentFrame == nil){
+            print("update frame")
+            return
+        }
         
         images.append(streamingController1.currentFrame!)
         images.append(streamingController2.currentFrame!)
@@ -105,6 +117,15 @@ class MenuController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func MenutoView1(swipe: UISwipeGestureRecognizer){
+        switch swipe.direction.rawValue{
+        case 2:
+            performSegue(withIdentifier: "MenutoView1", sender: self)
+        default:
+            break
+        }
     }
 /*
     @IBAction func turnOnCams(_ sender: AnyObject) {
