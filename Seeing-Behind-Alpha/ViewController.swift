@@ -9,14 +9,13 @@
 import UIKit
 import MjpegStreamingKit
 
-var streamingController1: MjpegStreamingController!
-
-
 class ViewController: UIViewController {
     
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var imageView: UIImageView!
+    
+    var streamingController1: MjpegStreamingController!
     
     var url: URL?
     
@@ -60,6 +59,11 @@ class ViewController: UIViewController {
         playing = true
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        print("Terminate cam1 display")
+        streamingController1.stop()
+        playing = false
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

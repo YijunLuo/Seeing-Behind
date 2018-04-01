@@ -9,13 +9,13 @@
 import UIKit
 import MjpegStreamingKit
 
-var streamingController2: MjpegStreamingController!
-
 class ViewControllerII: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    
+    var streamingController2: MjpegStreamingController!
     
     //@IBOutlet weak var playButton: UIButton!
     
@@ -35,6 +35,12 @@ class ViewControllerII: UIViewController {
         let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.myViewController2 = self
         
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print("Terminate cam2 display")
+        streamingController2.stop()
+        playing = false
     }
     
     func reloadCamView() {

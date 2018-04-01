@@ -69,6 +69,7 @@
                         <outlet property="view1" destination="ipU-bY-Mz5" id="elO-8s-PEX"/>
                         <outlet property="view2" destination="aIi-Vo-qZK" id="Tt6-r9-tS4"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="MenutoView1" id="J1k-LI-gfO"/>
+                        <segue destination="hGK-zY-7HC" kind="show" identifier="MenutoView2" id="qiX-PF-kGi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3uD-Qa-ZPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -134,7 +135,6 @@
                             </mask>
                         </variation>
                         <connections>
-                            <outletCollection property="gestureRecognizers" destination="odW-bw-Q5E" appends="YES" id="9ci-qE-M2B"/>
                             <outletCollection property="gestureRecognizers" destination="a8g-0G-8Tx" appends="YES" id="nPw-FB-zPU"/>
                             <outletCollection property="gestureRecognizers" destination="LvU-hQ-EhN" appends="YES" id="Ucq-dG-Ege"/>
                         </connections>
@@ -145,11 +145,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="left" id="odW-bw-Q5E">
-                    <connections>
-                        <segue destination="hGK-zY-7HC" kind="show" identifier="View1toView2" id="vQV-cf-vXD"/>
-                    </connections>
-                </swipeGestureRecognizer>
                 <swipeGestureRecognizer direction="right" id="a8g-0G-8Tx">
                     <connections>
                         <segue destination="7t9-yL-ADG" kind="show" identifier="View1toMenu" id="CDX-zr-fDj"/>
@@ -228,9 +223,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IQ6-UO-X4p" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="V7U-Ko-B66">
+                <swipeGestureRecognizer direction="left" id="V7U-Ko-B66">
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="View2toView1" id="0gS-in-Y1v"/>
+                        <segue destination="7t9-yL-ADG" kind="show" identifier="View2toMenu" id="N8g-py-wgv"/>
                     </connections>
                 </swipeGestureRecognizer>
                 <tapGestureRecognizer id="fD4-z5-Agt">
@@ -239,10 +234,10 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="951.20000000000005" y="339.58020989505252"/>
+            <point key="canvasLocation" x="-1330" y="340"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="0gS-in-Y1v"/>
+        <segue reference="N8g-py-wgv"/>
     </inferredMetricsTieBreakers>
 </document>

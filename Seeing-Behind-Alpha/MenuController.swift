@@ -14,8 +14,9 @@ class MenuController: UIViewController {
     @IBOutlet weak var stitchView: UIImageView!
     @IBOutlet weak var stitchButton: UIButton!
     
-    //var myViewController1: ViewController!
-    //var myViewController2: ViewControllerII!
+    var streamingController1: MjpegStreamingController!
+    var streamingController2: MjpegStreamingController!
+    
     var stitchImg = UIImage()
     
     var displaylink: CADisplayLink?
@@ -32,9 +33,13 @@ class MenuController: UIViewController {
         streamingController2 = MjpegStreamingController(imageView: view2)
         
         //SwipeAction
-        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(MenutoView1(swipe:)))
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(MenutoViews(swipe:)))
         leftSwipe.direction = UISwipeGestureRecognizerDirection.left
         self.view.addGestureRecognizer(leftSwipe)
+        
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(MenutoViews(swipe:)))
+        rightSwipe.direction = UISwipeGestureRecognizerDirection.right
+        self.view.addGestureRecognizer(rightSwipe)
         
         
         let url1 = URL(string: "http://"+host_url+":8081")
@@ -43,7 +48,7 @@ class MenuController: UIViewController {
         streamingController2.contentURL = url2
         streamingController1.play()
         streamingController2.play()
-        usleep(1000000)
+        //usleep(1000000)
         pressStitch(nil)
         
         //View1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "view1") as! ViewController
@@ -94,7 +99,7 @@ class MenuController: UIViewController {
          print("update frame")
          }*/
         
-        if (streamingController1.currentFrame == nil){
+        if (streamingController1.currentFrame == nil || streamingController2.currentFrame == nil){
             print("update frame")
             return
         }
@@ -119,8 +124,10 @@ class MenuController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @objc func MenutoView1(swipe: UISwipeGestureRecognizer){
+    @objc func MenutoViews(swipe: UISwipeGestureRecognizer){
         switch swipe.direction.rawValue{
+        case 1:
+            performSegue(withIdentifier: "MenutoView2", sender: self)
         case 2:
             performSegue(withIdentifier: "MenutoView1", sender: self)
         default:
