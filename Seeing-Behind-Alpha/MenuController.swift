@@ -9,6 +9,7 @@
 import UIKit
 import NMSSH
 import MjpegStreamingKit
+import NVActivityIndicatorView
 
 class MenuController: UIViewController {
     @IBOutlet weak var stitchView: UIImageView!
@@ -60,6 +61,8 @@ class MenuController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         print("Terminate stitching display")
         displaylink?.invalidate()
+        streamingController1.stop()
+        streamingController2.stop()
     }
     
     @objc func displayImage(image: UIImage){

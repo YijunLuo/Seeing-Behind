@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		290BC7E4207193F000D93E79 /* NVActivityIndicatorView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 290BC7E2207193F000D93E79 /* NVActivityIndicatorView.framework */; };
+		290BC7E5207194D200D93E79 /* NVActivityIndicatorView.framework in Embed Frameworks (2 items) */ = {isa = PBXBuildFile; fileRef = 290BC7E2207193F000D93E79 /* NVActivityIndicatorView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		290BC7E72071982000D93E79 /* LoadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290BC7E62071982000D93E79 /* LoadController.swift */; };
 		2927C593205A1FD4003E727E /* OpenCVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2927C592205A1FD4003E727E /* OpenCVWrapper.mm */; };
 		2949B13F203DECD000E8580F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2949B13E203DECD000E8580F /* AppDelegate.swift */; };
 		2949B141203DECD000E8580F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2949B140203DECD000E8580F /* ViewController.swift */; };
@@ -20,9 +23,9 @@
 		2949B171203DF5D000E8580F /* MjpegStreamingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2949B170203DF5D000E8580F /* MjpegStreamingKit.framework */; };
 		2949B177203DFB4A00E8580F /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2949B175203DFB4A00E8580F /* MenuController.swift */; };
 		2949B178203DFB4A00E8580F /* ViewControllerII.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2949B176203DFB4A00E8580F /* ViewControllerII.swift */; };
-		2949B179203DFBF100E8580F /* MjpegStreamingKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2949B170203DF5D000E8580F /* MjpegStreamingKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2949B179203DFBF100E8580F /* MjpegStreamingKit.framework in Embed Frameworks (2 items) */ = {isa = PBXBuildFile; fileRef = 2949B170203DF5D000E8580F /* MjpegStreamingKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2949B188203E091D00E8580F /* NMSSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2949B187203E091D00E8580F /* NMSSH.framework */; };
-		2949B189203E092A00E8580F /* NMSSH.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2949B187203E091D00E8580F /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2949B189203E092A00E8580F /* NMSSH.framework in Embed Frameworks (2 items) */ = {isa = PBXBuildFile; fileRef = 2949B187203E091D00E8580F /* NMSSH.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		298E454E206087FE009FBA92 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8C5DE4D205EFB2500965D7D /* opencv2.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,21 +47,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		2949B16F203DF22100E8580F /* Embed Frameworks */ = {
+		2949B16F203DF22100E8580F /* Embed Frameworks (2 items) */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2949B189203E092A00E8580F /* NMSSH.framework in Embed Frameworks */,
-				2949B179203DFBF100E8580F /* MjpegStreamingKit.framework in Embed Frameworks */,
+				290BC7E5207194D200D93E79 /* NVActivityIndicatorView.framework in Embed Frameworks (2 items) */,
+				2949B189203E092A00E8580F /* NMSSH.framework in Embed Frameworks (2 items) */,
+				2949B179203DFBF100E8580F /* MjpegStreamingKit.framework in Embed Frameworks (2 items) */,
 			);
-			name = "Embed Frameworks";
+			name = "Embed Frameworks (2 items)";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		290BC7E2207193F000D93E79 /* NVActivityIndicatorView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NVActivityIndicatorView.framework; path = Carthage/Build/iOS/NVActivityIndicatorView.framework; sourceTree = "<group>"; };
+		290BC7E62071982000D93E79 /* LoadController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadController.swift; sourceTree = "<group>"; };
 		2927C591205A1FD4003E727E /* OpenCVWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenCVWrapper.h; sourceTree = "<group>"; };
 		2927C592205A1FD4003E727E /* OpenCVWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVWrapper.mm; sourceTree = "<group>"; };
 		2927C594205A201D003E727E /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -90,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				290BC7E4207193F000D93E79 /* NVActivityIndicatorView.framework in Frameworks */,
 				298E454E206087FE009FBA92 /* opencv2.framework in Frameworks */,
 				2949B16B203DF13600E8580F /* libz.1.tbd in Frameworks */,
 				2949B169203DF13000E8580F /* Foundation.framework in Frameworks */,
@@ -145,6 +152,7 @@
 				2927C591205A1FD4003E727E /* OpenCVWrapper.h */,
 				2927C592205A1FD4003E727E /* OpenCVWrapper.mm */,
 				2927C594205A201D003E727E /* PrefixHeader.pch */,
+				290BC7E62071982000D93E79 /* LoadController.swift */,
 			);
 			path = "Seeing-Behind-Alpha";
 			sourceTree = "<group>";
@@ -161,6 +169,7 @@
 		2949B15E203DED0700E8580F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				290BC7E2207193F000D93E79 /* NVActivityIndicatorView.framework */,
 				C8C5DE4D205EFB2500965D7D /* opencv2.framework */,
 				2949B187203E091D00E8580F /* NMSSH.framework */,
 				2949B170203DF5D000E8580F /* MjpegStreamingKit.framework */,
@@ -189,7 +198,7 @@
 				2949B137203DECD000E8580F /* Sources */,
 				2949B138203DECD000E8580F /* Frameworks */,
 				2949B139203DECD000E8580F /* Resources */,
-				2949B16F203DF22100E8580F /* Embed Frameworks */,
+				2949B16F203DF22100E8580F /* Embed Frameworks (2 items) */,
 			);
 			buildRules = (
 			);
@@ -308,6 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2949B141203DECD000E8580F /* ViewController.swift in Sources */,
+				290BC7E72071982000D93E79 /* LoadController.swift in Sources */,
 				2927C593205A1FD4003E727E /* OpenCVWrapper.mm in Sources */,
 				2949B177203DFB4A00E8580F /* MenuController.swift in Sources */,
 				2949B178203DFB4A00E8580F /* ViewControllerII.swift in Sources */,
@@ -469,9 +479,10 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 3VSEMTCS5Y;
 				FRAMEWORK_SEARCH_PATHS = (
-					"/Users/zhuanxinzhizhihaohaoxuexi/Desktop/498/Seeing-Behind-Beta-master/**",
+					"/Users/lyjtour/Downloads/498/Seeing-Behind-Beta/**",
 					"$(PROJECT_DIR)/**",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Seeing-Behind-Alpha/PrefixHeader.pch";
 				INFOPLIST_FILE = "Seeing-Behind-Alpha/Info.plist";
@@ -494,9 +505,10 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 3VSEMTCS5Y;
 				FRAMEWORK_SEARCH_PATHS = (
-					"/Users/zhuanxinzhizhihaohaoxuexi/Desktop/498/Seeing-Behind-Beta-master/**",
+					"/Users/lyjtour/Downloads/498/Seeing-Behind-Beta/**",
 					"$(PROJECT_DIR)/**",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Seeing-Behind-Alpha/PrefixHeader.pch";
 				INFOPLIST_FILE = "Seeing-Behind-Alpha/Info.plist";

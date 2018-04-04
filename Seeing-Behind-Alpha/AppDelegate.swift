@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+        /*
         var session: NMSSHSession = NMSSHSession (host:host_url, andUsername:username)
         session.connect()
         if (session.isConnected) {
@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         session.disconnect()
         print("give Pi time to sudo motion")
         usleep(2000000)
-        
+        */
         return true
     }
     
