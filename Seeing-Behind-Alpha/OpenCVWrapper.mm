@@ -135,6 +135,10 @@ static int flag = 0;
 static Mat homo = Mat();
 void OptimizeSeam(Mat& img1, Mat& trans, Mat& dst);
 
++ (void) setflag {
+    flag = 0;
+}
+
 typedef std::set<std::pair<int,int> > MatchesSet;
 
 typedef struct
@@ -206,92 +210,105 @@ void CalcCorners(const Mat& H, const Mat& src)
         cvtColor(image02, image2, CV_RGB2GRAY);
         
         //提取特征点
-        Ptr<FeatureDetector> detector = ORB::create(3000);
-        vector<KeyPoint> keyPoint1, keyPoint2;
-        detector->detect(image1, keyPoint1);
-        detector->detect(image2, keyPoint2);
-        
-        //特征点描述，为下边的特征点匹配做准备
-        DescriptorExtractor   Descriptor;
-        Ptr<DescriptorExtractor> descriptorExtractor = ORB::create();
-        Mat imageDesc1, imageDesc2;
-        
-        descriptorExtractor->compute(image1, keyPoint1, imageDesc1);
-        descriptorExtractor->compute(image2, keyPoint2, imageDesc2);
-        
-        
-        Ptr<DescriptorMatcher> matcher = makePtr<FlannBasedMatcher>(makePtr<flann::LshIndexParams>(12, 20, 2));
-        vector<vector<DMatch> > matchePoints;
-        vector<DMatch> GoodMatchePoints;
-        
-        MatchesSet matches;
-        
-        vector<Mat> train_desc(1, imageDesc1);
-        matcher->add(train_desc);
-        matcher->train();
-        
-        matcher->knnMatch(imageDesc2, matchePoints, 2);
-        
-        // Lowe's algorithm,获取优秀匹配点
-        for (int i = 0; i < matchePoints.size(); i++)
-        {
-            if (matchePoints[i].size() >=2 && matchePoints[i][0].distance < 0.8 * matchePoints[i][1].distance)
+        try{
+            Ptr<FeatureDetector> detector = ORB::create(3000);
+            vector<KeyPoint> keyPoint1, keyPoint2;
+            detector->detect(image1, keyPoint1);
+            detector->detect(image2, keyPoint2);
+            
+            //特征点描述，为下边的特征点匹配做准备
+            DescriptorExtractor   Descriptor;
+            Ptr<DescriptorExtractor> descriptorExtractor = ORB::create();
+            Mat imageDesc1, imageDesc2;
+            
+            descriptorExtractor->compute(image1, keyPoint1, imageDesc1);
+            descriptorExtractor->compute(image2, keyPoint2, imageDesc2);
+            
+            
+            Ptr<DescriptorMatcher> matcher = makePtr<FlannBasedMatcher>(makePtr<flann::LshIndexParams>(12, 20, 2));
+            vector<vector<DMatch> > matchePoints;
+            vector<DMatch> GoodMatchePoints;
+            
+            MatchesSet matches;
+            
+            vector<Mat> train_desc(1, imageDesc1);
+            matcher->add(train_desc);
+            matcher->train();
+            
+            matcher->knnMatch(imageDesc2, matchePoints, 2);
+            
+            // Lowe's algorithm,获取优秀匹配点
+            for (int i = 0; i < matchePoints.size(); i++)
             {
-                GoodMatchePoints.push_back(matchePoints[i][0]);
-                matches.insert(make_pair(matchePoints[i][0].queryIdx, matchePoints[i][0].trainIdx));
+                if (matchePoints[i].size() >=2 && matchePoints[i][0].distance < 0.8 * matchePoints[i][1].distance)
+                {
+                    GoodMatchePoints.push_back(matchePoints[i][0]);
+                    matches.insert(make_pair(matchePoints[i][0].queryIdx, matchePoints[i][0].trainIdx));
+                }
             }
-        }
-        //cout<<"\n1->2 matches: " << GoodMatchePoints.size() << endl;
+            //cout<<"\n1->2 matches: " << GoodMatchePoints.size() << endl;
+            
+            //画 匹配特征点的 连线
+            //Mat first_match;
+            //drawMatches(image02, keyPoint2, image01, keyPoint1, GoodMatchePoints, first_match);
+            
+            //将两张图像转换为同一坐标下 变换矩阵
+            vector<Point2f> imagePoints1, imagePoints2;
+            
+            for (int i = 0; i<GoodMatchePoints.size(); i++)
+            {
+                imagePoints2.push_back(keyPoint2[GoodMatchePoints[i].queryIdx].pt);
+                imagePoints1.push_back(keyPoint1[GoodMatchePoints[i].trainIdx].pt);
+            }
+            
         
-        //画 匹配特征点的 连线
-        //Mat first_match;
-        //drawMatches(image02, keyPoint2, image01, keyPoint1, GoodMatchePoints, first_match);
-        
-        //将两张图像转换为同一坐标下 变换矩阵
-        vector<Point2f> imagePoints1, imagePoints2;
-        
-        for (int i = 0; i<GoodMatchePoints.size(); i++)
-        {
-            imagePoints2.push_back(keyPoint2[GoodMatchePoints[i].queryIdx].pt);
-            imagePoints1.push_back(keyPoint1[GoodMatchePoints[i].trainIdx].pt);
-        }
-        
-        
-        //获取图像1到图像2的投影映射矩阵 尺寸为3*3
+            //获取图像1到图像2的投影映射矩阵 尺寸为3*3
     
-    
-        homo = findHomography(imagePoints1, imagePoints2, CV_RANSAC);
-        flag = 1;
+            homo = findHomography(imagePoints1, imagePoints2, CV_RANSAC);
+            flag = 1;
+        }
+        catch(cv::Exception& exp){
+            flag = 0;
+            return pimage1;
+        }
+        
     }
     
     //cout << "变换矩阵为：\n" << homo << endl << endl; //输出映射矩阵
     
     //计算配准图的四个顶点坐标
-    CalcCorners(homo, image01);
-    //cout << "left_top:" << corners.left_top << endl;
-    //cout << "left_bottom:" << corners.left_bottom << endl;
-    //cout << "right_top:" << corners.right_top << endl;
-    //cout << "right_bottom:" << corners.right_bottom << endl;
+    try{
+        CalcCorners(homo, image01);
+        //cout << "left_top:" << corners.left_top << endl;
+        //cout << "left_bottom:" << corners.left_bottom << endl;
+        //cout << "right_top:" << corners.right_top << endl;
+        //cout << "right_bottom:" << corners.right_bottom << endl;
+        
+        //图像配准
+        Mat imageTransform1, imageTransform2;
+        warpPerspective(image01, imageTransform1, homo, cv::Size(MAX(corners.right_top.x, corners.right_bottom.x), image02.rows), INTER_LINEAR, BORDER_REPLICATE);
+        
+        //创建拼接后的图,需提前计算图的大小
+        int dst_width = imageTransform1.cols;  //取最右点的长度为拼接图的长度
+        int dst_height = image02.rows;
+        
+        Mat dst(dst_height, dst_width, CV_8UC3);
+        dst.setTo(0);
+        
+        imageTransform1.copyTo(dst(cv::Rect(0, 0, imageTransform1.cols, imageTransform1.rows)));
+        
+        image02.copyTo(dst(cv::Rect(0, 0, image02.cols, image02.rows)));
+        
+        //OptimizeSeam(image02, imageTransform1, dst);
+        
+        //dst 拼接后的图片 ,first_match 2张图特征点连线
+        return MatToUIImage(dst);
+    }
+    catch(cv::Exception& exp){
+        flag = 0;
+        return pimage1;
+    }
     
-    //图像配准
-    Mat imageTransform1, imageTransform2;
-    warpPerspective(image01, imageTransform1, homo, cv::Size(MAX(corners.right_top.x, corners.right_bottom.x), image02.rows), INTER_LINEAR, BORDER_REPLICATE);
-    
-    //创建拼接后的图,需提前计算图的大小
-    int dst_width = imageTransform1.cols;  //取最右点的长度为拼接图的长度
-    int dst_height = image02.rows;
-    
-    Mat dst(dst_height, dst_width, CV_8UC3);
-    dst.setTo(0);
-    
-    imageTransform1.copyTo(dst(cv::Rect(0, 0, imageTransform1.cols, imageTransform1.rows)));
-    
-    image02.copyTo(dst(cv::Rect(0, 0, image02.cols, image02.rows)));
-    
-    //OptimizeSeam(image02, imageTransform1, dst);
-    
-    //dst 拼接后的图片 ,first_match 2张图特征点连线
-    return MatToUIImage(dst);
 }
 
 //优化两图的连接处，使得拼接自然

@@ -41,8 +41,9 @@ class LoadController: UIViewController{
             }
         
             var error: NSError?
-            var response: String? = session.channel.execute("sudo motion", error: &error, timeout: nil)
-            //NSLog("List of my sites: %@", response)
+            var response: String! = session.channel.execute("sudo motion", error: &error, timeout: nil)
+            //var response: String! = session.channel.execute("mkdir", error: &error, timeout: nil)
+            print("List of my sites: ", response)
             //var BOOL success = [session.channel uploadFile:@"~/index.html" to:@"/var/www/9muses.se/"];
             session.disconnect()
             print("give Pi time to sudo motion")

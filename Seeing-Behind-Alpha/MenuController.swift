@@ -13,7 +13,6 @@ import NVActivityIndicatorView
 
 class MenuController: UIViewController {
     @IBOutlet weak var stitchView: UIImageView!
-    @IBOutlet weak var stitchButton: UIButton!
     
     var streamingController1: MjpegStreamingController!
     var streamingController2: MjpegStreamingController!
@@ -42,6 +41,9 @@ class MenuController: UIViewController {
         rightSwipe.direction = UISwipeGestureRecognizerDirection.right
         self.view.addGestureRecognizer(rightSwipe)
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(StitchAgain(_:)))
+        self.view.addGestureRecognizer(tap)
+        view.isUserInteractionEnabled = true
         
         let url1 = URL(string: "http://"+host_url+":8081")
         streamingController1.contentURL = url1
@@ -67,6 +69,11 @@ class MenuController: UIViewController {
     
     @objc func displayImage(image: UIImage){
         stitchImg = image
+    }
+    
+    @objc func StitchAgain(_ sender: UITapGestureRecognizer? = nil) {
+        OpenCVWrapper.setflag()
+        print("Stitch Again")
     }
     
     @objc func stitch(){

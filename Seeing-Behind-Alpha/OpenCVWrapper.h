@@ -11,7 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 @interface OpenCVWrapper : NSObject
-
++ (void) setflag;
 + (NSString *)openCVVersionString;
 + (UIImage *)stitchWithOpenCV:(NSArray *)images;
 + (UIImage *) startTest:(UIImage *)pimage1 image2:(UIImage *)pimage2;
